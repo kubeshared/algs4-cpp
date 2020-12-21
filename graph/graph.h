@@ -6,7 +6,27 @@
 #include <iostream>
 #include <cassert>
 
+class GraphAdjIterator;
+class Graph;
+
+class GraphAdjIterator {
+    typedef std::vector<int>::const_iterator const_iterator;
+
+public:
+    GraphAdjIterator(const Graph &G, int v);
+
+    const_iterator cbegin();
+
+    const_iterator cend();
+
+private:
+    const Graph &_g;
+    int _v;
+    std::vector<int> _adjResults;
+};
+
 class Graph {
+    friend GraphAdjIterator;
 public:
     Graph() = default;
 
@@ -19,7 +39,7 @@ public:
 
     void addEdge(int v, int w);
 
-    std::vector<int> *adj(int v) const;
+    GraphAdjIterator *adj(int v) const;
 
     inline bool hasEdge(int v, int w) const;
 
@@ -30,9 +50,22 @@ private:
     size_t _m;
     bool _directed;
     std::vector<std::vector<bool>> _g;
-
 private:
 };
+
+GraphAdjIterator::GraphAdjIterator(const Graph &G, int v) : _g(G), _v(v) {
+    for (auto it = G._g[v].cbegin(); it != G._g[v].cend(); it++) {
+        if (*it) _adjResults.push_back(it - G._g[v].cbegin());
+    }
+}
+
+GraphAdjIterator::const_iterator GraphAdjIterator::cbegin() {
+    return _adjResults.cbegin();
+}
+
+GraphAdjIterator::const_iterator GraphAdjIterator::cend() {
+    return _adjResults.cend();
+}
 
 Graph::Graph(size_t v) {
     assert(v >= 0);
@@ -42,7 +75,6 @@ Graph::Graph(size_t v) {
         _g.push_back(std::vector<bool>(v, false));
     }
 }
-
 
 inline size_t Graph::V() const {
     return _n;
@@ -62,11 +94,8 @@ void Graph::addEdge(int v, int w) {
     _m++;
 }
 
-std::vector<int> *Graph::adj(int v) const {
-    auto *adjs = new std::vector<int>();
-    for (auto it = _g[v].cbegin(); it != _g[v].cend(); it++)
-        if (*it) (*adjs).push_back(it - _g[v].cbegin());
-    return adjs;
+GraphAdjIterator* Graph::adj(int v) const{
+    return new GraphAdjIterator(*this, v);
 }
 
 void Graph::toString() const {
@@ -75,11 +104,10 @@ void Graph::toString() const {
         // TODO v append to string buffer
         size_t v = it - _g.cbegin();
         std::cout << v << ": ";
-        auto adjs = adj(v);
-        for (auto w : *adjs) {
-            std::cout << w << " ";
-        }
-        delete adjs;
+        auto ajdIterator = adj(v);
+        for (auto git = ajdIterator->cbegin(); git != ajdIterator->cend(); git++)
+            std::cout << *git << " ";
+        delete ajdIterator;
         std::cout << std::endl;
     }
 }
@@ -89,6 +117,8 @@ inline bool Graph::hasEdge(int v, int w) const {
     assert(w >= 0 && w <= _n);
     return _g[v][w];
 }
+
+
 
 
 #endif // !ALGS4_CPP_GRAPH

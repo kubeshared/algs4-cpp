@@ -40,11 +40,10 @@ DepthFirstSearch::~DepthFirstSearch() {
 void DepthFirstSearch::_dfs(const Graph& G, int v) {
     _marked[v] = true;
     _count++;
-    auto adjs = G.adj(v);
-    for (auto w : *adjs) {
-        if (!_marked[w]) _dfs(G, w);
-    }
-    free(adjs);
+    auto ajdIterator = G.adj(v);
+    for (auto it = ajdIterator->cbegin(); it != ajdIterator->cend(); it++)
+        if (!_marked[*it]) _dfs(G, *it);
+    delete ajdIterator;
 }
 
 bool DepthFirstSearch::marked(int v) {

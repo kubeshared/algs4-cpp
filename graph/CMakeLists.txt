@@ -1,1 +1,1 @@
-add_executable(graph graph.cc search.h graph.h)
+add_executable(graph graph_example.cpp search.h graph.h)
