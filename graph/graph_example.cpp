@@ -1,4 +1,5 @@
 #include <iostream>
+#include "graph.h"
 #include "search.h"
 
 int main() {
@@ -14,7 +15,6 @@ int main() {
     g.addEdge(9, 11);
     g.addEdge(9, 12);
     g.toString();
-    DepthFirstSearch dfs(g, 0);
+    BreadthFirstSearch dfs(g, 0);
     std::cout << dfs.marked(5) << std::endl;
-
 }

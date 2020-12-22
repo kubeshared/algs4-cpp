@@ -5,3 +5,5 @@
 *.exe
 *.so
 *.out
+build
+cmake-build-debug

@@ -1,5 +1,0 @@
-/mnt/d/Workspace/Code/github.com/kubeshared/algs4-cpp/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/mnt/d/Workspace/Code/github.com/kubeshared/algs4-cpp/cmake-build-debug/CMakeFiles/edit_cache.dir
-/mnt/d/Workspace/Code/github.com/kubeshared/algs4-cpp/cmake-build-debug/graph/CMakeFiles/rebuild_cache.dir
-/mnt/d/Workspace/Code/github.com/kubeshared/algs4-cpp/cmake-build-debug/graph/CMakeFiles/graph.dir
-/mnt/d/Workspace/Code/github.com/kubeshared/algs4-cpp/cmake-build-debug/graph/CMakeFiles/edit_cache.dir
