@@ -1,6 +1,6 @@
 #include <iostream>
 #include "graph.h"
-#include "search.h"
+#include "bfs.h"
 
 int main() {
     Graph g(13);
@@ -12,9 +12,19 @@ int main() {
     g.addEdge(3, 4);
     g.addEdge(7, 8);
     g.addEdge(9, 10);
-    g.addEdge(9, 11);
-    g.addEdge(9, 12);
-    g.toString();
-    BreadthFirstSearch dfs(g, 0);
-    std::cout << dfs.marked(5) << std::endl;
+    g.addEdge(10, 11);
+    g.addEdge(11, 12);
+    BreadthFirstSearch bfs(g, 9);
+    std::cout << "marked: " <<  bfs.marked(12) << std::endl;
+    auto paths = bfs.pathTo(12);
+    while (true) {
+        std::cout << paths->top();
+        paths->pop();
+        if (paths->empty()) {
+            break;
+        }
+         std::cout<< "-";
+    }
+    std::cout << std::endl;
+    delete paths;
 }

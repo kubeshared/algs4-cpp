@@ -16,30 +16,5 @@ public:
     int count();
 };
 
-class DepthFirstSearch{
-public:
-    DepthFirstSearch() = default;
-    DepthFirstSearch(const Graph& G, int s);
-    ~DepthFirstSearch();
-    bool marked(int v);
-    int count() const;
-private:
-    void _dfs(const Graph& G, int v);    bool *_marked;
-    size_t _count;
-};
-
-class BreadthFirstSearch {
-public:
-    BreadthFirstSearch() = default;
-    BreadthFirstSearch(const Graph& G, int s);
-    ~BreadthFirstSearch();
-    bool marked(int v);
-    int count() const;
-private:
-    void _bfs(const Graph& G, int v);
-    bool *_marked;
-    size_t _count;
-    std::queue<int> _queue;
-};
 
 #endif //ALGS4_CPP_SEARCH_H
