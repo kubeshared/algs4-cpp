@@ -15,7 +15,6 @@ class GraphAdjIterator {
 
 public:
     GraphAdjIterator(const Graph &G, int v);
-
     const_iterator cbegin();
 
     const_iterator cend();
