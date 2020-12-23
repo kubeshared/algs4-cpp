@@ -2,6 +2,7 @@
 #include "graph.h"
 #include "bfs.h"
 #include "dfs.h"
+#include "dfs_cc.h"
 
 int main() {
     Graph g(13);
@@ -15,7 +16,6 @@ int main() {
     g.addEdge(9, 10);
     g.addEdge(10, 11);
     g.addEdge(11, 12);
-
 
     DepthFirstSearch dfs(g, 9);
     std::cout << "dfs marked: " <<  dfs.marked(12) << std::endl;
@@ -47,4 +47,11 @@ int main() {
     }
     std::cout << std::endl;
     delete bfsPaths;
+
+    DepthFirstSearchCC dfscc(g);
+    std::cout << "connected: " << dfscc.connected(0, 6) << std::endl;
+    std::cout << "connected: " << dfscc.connected(9, 12) << std::endl;
+    std::cout << "connected: " << dfscc.connected(0, 9) << std::endl;
+
+
 }
