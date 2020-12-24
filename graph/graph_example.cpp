@@ -4,11 +4,14 @@
 #include "dfs.h"
 #include "dfs_cc.h"
 #include "bfs_cc.h"
+#include "dfs_cycle.h"
 
 int main() {
     Graph g(13);
     g.addEdge(0, 1);
     g.addEdge(0, 2);
+    g.addEdge(2, 5);
+    g.addEdge(5, 0);
     g.addEdge(0, 5);
     g.addEdge(0, 6);
     g.addEdge(3, 5);
@@ -60,4 +63,14 @@ int main() {
     std::cout << "bfs connected 9, 12: " << bfscc.connected(9, 12) << std::endl;
     std::cout << "bfs connected 0, 9: " << bfscc.connected(0, 9) << std::endl;
 
+    Graph g2(5);
+    g2.addEdge(0, 1);
+    g2.addEdge(1, 2);
+    g2.addEdge(2, 3);
+    g2.addEdge(3, 4);
+    g2.addEdge(4, 0);
+    g2.addEdge(2, 0);
+    DepthFirstSearchCycle dfscycle(g2);
+    std::cout << "bfs has cycle: " << dfscycle.hasCycle() << std::endl;
+    std::cout << "bfs cycle count: " << dfscycle.cycleCount() << std::endl;
 }
