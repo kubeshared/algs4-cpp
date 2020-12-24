@@ -3,6 +3,7 @@
 #include "bfs.h"
 #include "dfs.h"
 #include "dfs_cc.h"
+#include "bfs_cc.h"
 
 int main() {
     Graph g(13);
@@ -49,9 +50,14 @@ int main() {
     delete bfsPaths;
 
     DepthFirstSearchCC dfscc(g);
-    std::cout << "connected: " << dfscc.connected(0, 6) << std::endl;
-    std::cout << "connected: " << dfscc.connected(9, 12) << std::endl;
-    std::cout << "connected: " << dfscc.connected(0, 9) << std::endl;
+    std::cout << "dfs connected 0, 6: " << dfscc.connected(0, 6) << std::endl;
+    std::cout << "dfs connected 9, 12: " << dfscc.connected(9, 12) << std::endl;
+    std::cout << "dfs connected 0, 9: " << dfscc.connected(0, 9) << std::endl;
 
+
+    BreadthFirstSearchCC bfscc(g);
+    std::cout << "bfs connected 0, 6: " << bfscc.connected(0, 6) << std::endl;
+    std::cout << "bfs connected 9, 12: " << bfscc.connected(9, 12) << std::endl;
+    std::cout << "bfs connected 0, 9: " << bfscc.connected(0, 9) << std::endl;
 
 }

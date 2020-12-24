@@ -8,10 +8,10 @@
 DepthFirstSearchCC::DepthFirstSearchCC(const Graph &g) :_g(g) {
      _count = std::vector<int>(g.V());
      _marked = std::vector<bool>(g.V(), false);
-     auto cc = 0;
+    _ccCount = 0;
      for (auto i = 0; i < g.V(); i++) {
          if (!_marked[i]) {
-             _dfs(i, cc++);
+             _dfs(i, _ccCount++);
          }
      }
 }
@@ -30,4 +30,13 @@ bool DepthFirstSearchCC::connected(int s, int v) {
     assert(s >= 0 && s <= _g.V());
     assert(v >= 0 && v <= _g.V());
     return _count[s] == _count[v];
+}
+
+int DepthFirstSearchCC::count() {
+    return _ccCount;
+}
+
+int DepthFirstSearchCC::id(int v) {
+    assert(v >= 0 && v <= _g.V());
+    return _count[v];
 }

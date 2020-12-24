@@ -16,9 +16,12 @@ public:
 
     bool connected(int s, int v);
 
+    int count();
+    int id(int v);
 private:
     void _dfs(int v, int cc);
     const Graph &_g;
+    int _ccCount;
     std::vector<int> _count;
     std::vector<bool > _marked;
 };
