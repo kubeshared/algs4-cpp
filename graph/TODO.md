@@ -3,6 +3,6 @@
 - [ ]  DepthFirstPaths，单点路径
 - [ ] BreadthFirstPaths，单点最短路径
 - [x] CC，连通性
-- [ ] Cycle，检测环
-- [ ] TwoColor，双色问题（图的二分性）
+- [x] Cycle，检测环
+- [x] TwoColor，双色问题（图的二分性）
 

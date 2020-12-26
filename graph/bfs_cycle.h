@@ -9,10 +9,13 @@
 #include "graph.h"
 
 class BreadthFirstSearchCycle {
+public:
     BreadthFirstSearchCycle(const Graph &g);
+    bool hasCycle();
 private:
     void _bfs(const Graph &g, int v);
     bool _hasCycle;
+    std::vector<int> _parent;
     std::vector<bool> _marked;
 };
 
