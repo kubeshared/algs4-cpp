@@ -3,7 +3,7 @@
 //
 
 #include "bfs.h"
-BreadthFirstSearch::BreadthFirstSearch(const Graph &g, int s) : _g(g), _s(s) {
+BreadthFirstSearch::BreadthFirstSearch(const GraphInterface &g, int s) : _g(g), _s(s) {
     _queue = std::queue<int>();
     _count = 0;
     _marked = new bool[g.V()];
@@ -14,14 +14,13 @@ BreadthFirstSearch::~BreadthFirstSearch() {
     delete _marked;
 }
 
-void BreadthFirstSearch::_bfs(const Graph &G, int v) {
-    _marked[v] = true;
-    _queue.push(v);
+void BreadthFirstSearch::_bfs(const GraphInterface &G, int s) {
+    _marked[s] = true;
+    _queue.push(s);
     _count++;
     _edgeTo = std::vector<int>(G.V());
     while (!_queue.empty()) {
-        v = _queue.front();
-        _queue.pop();
+        int v = _queue.front();
         auto ajdIt = G.adj(v);
         for (auto it = ajdIt->cbegin(); it != ajdIt->cend(); it++) {
             if (!_marked[*it]) {
@@ -31,7 +30,7 @@ void BreadthFirstSearch::_bfs(const Graph &G, int v) {
                 _edgeTo[*it] = v;
             }
         }
-        delete ajdIt;
+        _queue.pop();
     }
 }
 
@@ -44,7 +43,7 @@ int BreadthFirstSearch::count() const {
 }
 
 bool BreadthFirstSearch::hasPathTo(int v) {
-    return _edgeTo[v] != -1;
+    return _edgeTo[v] != 0;
 }
 
 std::stack<int> *BreadthFirstSearch::pathTo(int v) {
@@ -56,3 +55,6 @@ std::stack<int> *BreadthFirstSearch::pathTo(int v) {
     s->push(_s);
     return s;
 }
+
+// Bacon, Kevin
+// Kidman, Nicole
