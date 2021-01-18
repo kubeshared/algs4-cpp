@@ -46,3 +46,19 @@ void DirectedDFS::dfs(const Digraph &g, int s) {
     }
 }
 
+void DirectedDFS::dfsOnStack(const Digraph &g, int s) {
+    marked[s] = true;
+    _stack = stack<int>();
+    _stack.push(s);
+    while (!_stack.empty()) {
+        AdjacencyIterator adjIt = g.adj(_stack.top());
+        while (adjIt.hasNext()) {
+            int v = adjIt.next();
+            if (!marked[v]) {
+                _stack.push(v);
+                marked[v] = true;
+            }
+        }
+        _stack.pop();
+    }
+}
