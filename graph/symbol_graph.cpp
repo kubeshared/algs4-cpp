@@ -7,6 +7,7 @@
 #include <fstream>
 #include <iostream>
 #include <cstdlib>
+#include <sstream>
 using namespace std;
 
 SymbolGraph::SymbolGraph(const std::string &filename, std::string delim) {

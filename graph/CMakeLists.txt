@@ -8,7 +8,7 @@ add_library(graph graph.cpp
         dfs_twocolor.cpp
         bfs_twocolor.cpp
         symbol_graph.cpp
-        symbol_graph.h)
+        symbol_graph.h directed/digraph.cpp directed/digraph.h)
 
 #add_executable(graph_example graph_example.cpp)
 
