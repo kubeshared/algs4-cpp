@@ -12,6 +12,7 @@
 #include <vector>
 #include <cassert>
 #include <iterator>
+#include <cstdlib>
 using namespace std;
 
 template <class Container>
