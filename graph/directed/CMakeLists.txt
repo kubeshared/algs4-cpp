@@ -8,7 +8,10 @@ add_library(digraph
         directed_dfs_order.cpp
         directed_dfs_order.h
         directed_topological.cpp
-        directed_topological.h)
+        directed_topological.h
+        directed_scc.cpp
+        directed_scc.h
+        )
 
 add_executable(digraph_example digraph_example.cpp)
 

@@ -9,15 +9,17 @@
 #include "directed_cycle.h"
 #include "directed_dfs_order.h"
 
+
+
 class Topological {
 public:
     Topological(const Digraph& G);
 
     bool isDAG() const;
 
-    const stack<int, deque<int>>& order() const;
+    stack<int> order() const;
 private:
-    const stack<int, deque<int>>* reverseOrder;
+    stack<int> reverseOrder;
 };
 
 

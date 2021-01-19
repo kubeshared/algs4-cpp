@@ -5,12 +5,9 @@
 #include "directed_dfs_order.h"
 DepthFirstOrder::DepthFirstOrder(const Digraph &G) {
     marked = new bool[G.V()];
-    for(int i = 0; i < G.V(); i++)
-        marked[i] = false;
-
     preQueue = new queue<int>;
     postQueue = new queue<int>;
-    reversePostQueue = new stack<int, deque<int>>;
+    reversePostQueue = new stack<int>;
 
     for (int s = 0; s < G.V(); s++)
         if (!marked[s])
@@ -48,6 +45,6 @@ const queue<int>* DepthFirstOrder::post() const {
     return postQueue;
 }
 
-const stack<int, deque<int>>* DepthFirstOrder::reversePost() const {
+const stack<int>* DepthFirstOrder::reversePost() const {
     return reversePostQueue;
 }

@@ -7,14 +7,14 @@ Topological::Topological(const Digraph &G) {
     DirectedCycle finder(G);
     if (!finder.hasCycle()) {
         DepthFirstOrder order(G);
-        reverseOrder = order.reversePost();
+        reverseOrder = *order.reversePost();
     }
 }
 
 bool Topological::isDAG() const {
-    return reverseOrder != nullptr;
+    return !reverseOrder.empty();
 }
 
-const stack<int, deque<int>>& Topological::order() const {
-    return *reverseOrder;
+stack<int> Topological::order() const {
+    return reverseOrder;
 }

@@ -19,14 +19,14 @@ public:
 
     const queue<int>* post() const;
 
-    const stack<int, deque<int>>* reversePost() const;
+    const stack<int>* reversePost() const;
 
 private:
     void dfs(const Digraph &g, int s);
 
     queue<int>* preQueue;
     queue<int>* postQueue;
-    stack<int, deque<int>>* reversePostQueue;
+    stack<int>* reversePostQueue;
     bool *marked;
 };
 

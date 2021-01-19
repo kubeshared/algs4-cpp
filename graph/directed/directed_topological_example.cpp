@@ -4,7 +4,6 @@
 
 #include "digraph.h"
 #include "directed_topological.h"
-#include <algorithm>
 
 int main(int argc, const char *argv[])
 {
@@ -16,13 +15,14 @@ int main(int argc, const char *argv[])
     string filename(argv[1]);
     fstream in(filename);
     Digraph dg(in);
+    cout << dg.toString() << endl;
     in.close();
 
     Topological top(dg);
-    if (top.isDAG()) {
-        for (int v : begin(top.order())) {
-            cout << v << " ";
-        }
-        cout << endl;
+    stack<int> topOrder = top.order();
+    while (!topOrder.empty()) {
+        cout << topOrder.top() << " ";
+        topOrder.pop();
     }
+    cout << endl;
 }
