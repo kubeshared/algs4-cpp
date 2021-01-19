@@ -13,7 +13,7 @@ public:
     ~DirectedDFS();
     bool mark(int v);
 private:
-    bool *marked{};
+    bool *marked;
     stack<int> _stack;
     void dfs(const Digraph& g, int s);
     void dfsOnStack(const Digraph& g, int s);

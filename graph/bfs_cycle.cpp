@@ -14,7 +14,6 @@ BreadthFirstSearchCycle::BreadthFirstSearchCycle(const Graph &g) {
 }
 
 void BreadthFirstSearchCycle::_bfs(const Graph &g, int v) {
-    auto q = std::queue<int>();
     _marked[v] = true;
     q.push(v);
     while (!q.empty()) {
