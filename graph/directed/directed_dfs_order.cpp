@@ -7,7 +7,7 @@ DepthFirstOrder::DepthFirstOrder(const Digraph &G) {
     marked = new bool[G.V()];
     preQueue = new queue<int>;
     postQueue = new queue<int>;
-    reversePostQueue = new stack<int>;
+    reversePostQueue = new deque<int>;
 
     for (int s = 0; s < G.V(); s++)
         if (!marked[s])
@@ -34,7 +34,7 @@ void DepthFirstOrder::dfs(const Digraph &g, int s) {
     }
 
     postQueue->push(s);
-    reversePostQueue->push(s);
+    reversePostQueue->push_front(s);
 }
 
 const queue<int>* DepthFirstOrder::pre() const {
@@ -45,6 +45,6 @@ const queue<int>* DepthFirstOrder::post() const {
     return postQueue;
 }
 
-const stack<int>* DepthFirstOrder::reversePost() const {
+const deque<int>* DepthFirstOrder::reversePost() const {
     return reversePostQueue;
 }

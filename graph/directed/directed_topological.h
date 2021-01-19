@@ -17,9 +17,9 @@ public:
 
     bool isDAG() const;
 
-    stack<int> order() const;
+    const deque<int>& order() const;
 private:
-    stack<int> reverseOrder;
+    deque<int> reverseOrder;
 };
 
 

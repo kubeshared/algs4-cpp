@@ -9,6 +9,7 @@ Digraph::Digraph(int v) {
     g = vector<vector<int>>(v, vector<int>());
 }
 
+// TODO problem
 Digraph::Digraph(fstream& in) {
     string line;
     if (!getline(in, line)) {
@@ -24,6 +25,8 @@ Digraph::Digraph(fstream& in) {
     int e = stoi(line);
     assert(e >= 0);
 
+    cout << v << endl;
+    cout << e << endl;
 
     g = vector<vector<int>>(v, vector<int>());
     _v = v;
@@ -32,6 +35,7 @@ Digraph::Digraph(fstream& in) {
             vector<string> edges;
             split(line, edges);
             assert(edges.size() == 2);
+            cout << stoi(edges[0]) << "," << stoi(edges[1]) << endl;
             addEdge(stoi(edges[0]), stoi(edges[1]));
         }
     }
@@ -67,14 +71,15 @@ AdjacencyIterator Digraph::adj(int v) const{
 }
 
 Digraph Digraph::reverse() const{
-    Digraph rg(_v);
+    Digraph reverse(_v);
     for (int v = 0; v < _v; v++) {
-        for (auto w : g[v]) {
-            cout << w << "," << v << endl;
-            rg.addEdge(w, v);
+        AdjacencyIterator adjIt = adj(v);
+        while (adjIt.hasNext()) {
+            int w = adjIt.next();
+            reverse.addEdge(w, v);
         }
     }
-    return rg;
+    return reverse;
 }
 
 string Digraph::toString() const {

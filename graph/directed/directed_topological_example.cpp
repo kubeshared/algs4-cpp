@@ -15,14 +15,11 @@ int main(int argc, const char *argv[])
     string filename(argv[1]);
     fstream in(filename);
     Digraph dg(in);
-    cout << dg.toString() << endl;
     in.close();
 
     Topological top(dg);
-    stack<int> topOrder = top.order();
-    while (!topOrder.empty()) {
-        cout << topOrder.top() << " ";
-        topOrder.pop();
+    for (auto v : top.order()) {
+        cout << v << " ";
     }
     cout << endl;
 }

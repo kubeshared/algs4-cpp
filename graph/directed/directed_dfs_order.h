@@ -7,7 +7,6 @@
 
 #include "digraph.h"
 #include <queue>
-#include <stack>
 
 class DepthFirstOrder {
 public:
@@ -19,14 +18,14 @@ public:
 
     const queue<int>* post() const;
 
-    const stack<int>* reversePost() const;
+    const deque<int>* reversePost() const;
 
 private:
     void dfs(const Digraph &g, int s);
 
     queue<int>* preQueue;
     queue<int>* postQueue;
-    stack<int>* reversePostQueue;
+    deque<int>* reversePostQueue;
     bool *marked;
 };
 

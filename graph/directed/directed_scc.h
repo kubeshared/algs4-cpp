@@ -5,15 +5,19 @@
 #ifndef ALGS4_DIRECTED_SCC_H
 #define ALGS4_DIRECTED_SCC_H
 #include "digraph.h"
-
+#include "directed_dfs_order.h"
 class SCC {
 public:
     SCC(const Digraph& G);
+    ~SCC();
     bool stronglyConnected(int v, int w);
     int count();
     int id(int v);
-
 private:
+    void dfs(const Digraph& G, int s);
+    bool *marked;
+    int *_id;
+    int _count;
 };
 
 
