@@ -28,7 +28,7 @@ DepthFirstOrder::~DepthFirstOrder() {
 void DepthFirstOrder::dfs(const Digraph &g, int v) {
     marked[v] = true;
     preQueue->push(v);
-    AdjacencyIterator adjIt = g.adj(v);
+    GraphListAdjacencyIterator adjIt = g.adj(v);
     while (adjIt.hasNext()){
         int w = adjIt.next();
         if (!marked[w]) {

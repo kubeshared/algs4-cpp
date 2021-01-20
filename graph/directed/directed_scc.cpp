@@ -41,7 +41,7 @@ int KosarajuSCC::id(int v) {
 void KosarajuSCC::dfs(const Digraph &G, int s) {
     marked[s] = true;
     _id[s] = _count;
-    AdjacencyIterator adjIt = G.adj(s);
+    GraphListAdjacencyIterator adjIt = G.adj(s);
     while (adjIt.hasNext()) {
         int v = adjIt.next();
         if (!marked[v])

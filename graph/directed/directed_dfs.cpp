@@ -37,7 +37,7 @@ bool DirectedDFS::mark(int v) {
 
 void DirectedDFS::dfs(const Digraph &g, int s) {
     marked[s] = true;
-    AdjacencyIterator adjIt = g.adj(s);
+    GraphListAdjacencyIterator adjIt = g.adj(s);
     while (adjIt.hasNext()) {
         int v = adjIt.next();
         if (!marked[v]) {
@@ -51,7 +51,7 @@ void DirectedDFS::dfsOnStack(const Digraph &g, int s) {
     _stack = stack<int>();
     _stack.push(s);
     while (!_stack.empty()) {
-        AdjacencyIterator adjIt = g.adj(_stack.top());
+        GraphListAdjacencyIterator adjIt = g.adj(_stack.top());
         while (adjIt.hasNext()) {
             int v = adjIt.next();
             if (!marked[v]) {

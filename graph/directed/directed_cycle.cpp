@@ -42,7 +42,7 @@ void DirectedCycle::dfs(const Digraph &G, int s) {
     marked[s] = true;
     // The onStack[s]=true means is the s on the system call stack.
     onStack[s] = true;
-    AdjacencyIterator adjIt = G.adj(s);
+    GraphListAdjacencyIterator adjIt = G.adj(s);
     while (adjIt.hasNext()) {
         if (hasCycle())
             return;

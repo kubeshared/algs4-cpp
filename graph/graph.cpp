@@ -37,11 +37,11 @@ Graph::Graph(size_t v, bool directed) {
     }
 }
 
- size_t Graph::V() const {
+size_t Graph::V() const {
     return _n;
 }
 
- size_t Graph::E() const {
+size_t Graph::E() const {
     return _m;
 }
 
@@ -55,7 +55,7 @@ void Graph::addEdge(int v, int w) {
     _m++;
 }
 
-GraphAdjIterator* Graph::adj(int v) const{
+GraphAdjIterator *Graph::adj(int v) const {
     return new GraphAdjIterator(*this, v);
 }
 
@@ -79,21 +79,30 @@ inline bool Graph::hasEdge(int v, int w) const {
     return _g[v][w];
 }
 
-GraphInterface::GraphInterface(int v) {
+GraphList::GraphList(int v) {
     _v = v;
-}
-
-GraphList::GraphList(int v): GraphInterface(v) {
-    _g = std::vector<std::vector<int>>(_v);
+    _g = vector<vector<int>>(_v);
     _directed = false;
     _parallel = false;
-    for (int i = 0; i < v; i++) {
-        _g.push_back(std::vector<int>());
+}
+
+GraphList::GraphList(fstream &in) {
+    int e;
+    in >> _v >> e;
+    _g = vector<vector<int>>(_v);
+    _directed = false;
+    _parallel = false;
+
+    for (int i = 0; i < e; i++) {
+        int v, w;
+        in >> v >> w;
+        addEdge(v, w);
     }
 }
 
-GraphList::GraphList(int v, bool directed, bool parallel) :GraphInterface(v) {
-    _g = std::vector<std::vector<int>>(_v);
+GraphList::GraphList(int v, bool directed, bool parallel) {
+    _v = v;
+    _g = vector<vector<int>>(_v);
     _directed = directed;
     _parallel = parallel;
 }
@@ -102,9 +111,8 @@ void GraphList::addEdge(int v, int w) {
     assert(v >= 0 && v <= _v);
     assert(w >= 0 && w <= _v);
     if (hasEdge(v, w) && !_parallel) return;
-
-    _g[v].push_back(w);
-    if (_directed) _g[w].push_back(v);
+    _g[v].insert(_g[v].begin(), w);
+    if (!_directed)(_g[w]).insert(_g[w].begin(), v);
     _e++;
 }
 
@@ -113,30 +121,128 @@ bool GraphList::hasEdge(int v, int w) {
     assert(w >= 0 && w <= _v);
 
     // O(N)
-    for (auto it = _g[v].cbegin(); it != _g[v].cend(); it++)
-        if (*it == w) return true;
+    for (auto i : (_g[v])) {
+        if (i == w) return true;
+    }
     return false;
 }
 
-const std::vector<int>* GraphList::adj(int v) const {
-//    std::cout << _g[v].size() << std::endl;
-//    GraphIterator *iter = new GraphListIterator(*this, v);
-//    return iter;
-    return &_g[v];
+AdjacencyIterator *GraphList::adj(int v) const {
+    return new GraphListAdjacencyIterator(*this, v);
 }
 
-GraphListIterator::GraphListIterator(const GraphList &g, int v) {
-    assert(v >= 0 && v <= g.V());
-    std::cout << g._g[v].size() << std::endl;
-    _v = &g._g[v];
-    _i = 0;
+string GraphList::toString() const {
+    stringstream ss;
+    ss << _v << " vertices, " << _e << " edges\n";
+    for (int i = 0; i < _v; i++) {
+        AdjacencyIterator *it = adj(i);
+        ss << i << ": ";
+        while (it->hasNext()) {
+            ss << it->next() << " ";
+        }
+        ss << "\n";
+        delete it;
+    }
+
+    return std::move(string(ss.str()));
+}
+
+GraphMatrix::GraphMatrix(int v) {
+    _v = v;
+    _g = vector<vector<bool>>(_v, vector<bool>(_v, false));
+    _directed = false;
+    _parallel = false;
+}
+
+GraphMatrix::GraphMatrix(fstream &in)
+        : _e(0) {
+    int e;
+    in >> _v >> e;
+    _g = vector<vector<bool>>(_v, vector<bool>(_v, false));
+    _directed = false;
+    _parallel = false;
+
+    for (int i = 0; i < e; i++) {
+        int v, w;
+        in >> v >> w;
+        addEdge(v, w);
+    }
+}
+
+GraphMatrix::GraphMatrix(int v, bool directed, bool parallel) {
+    _v = v;
+    _g = vector<vector<bool>>(_v, vector<bool>(_v, false));
+    _directed = directed;
+    _parallel = parallel;
+}
+
+void GraphMatrix::addEdge(int v, int w) {
+    assert(v >= 0 && v <= _v);
+    assert(w >= 0 && w <= _v);
+    if (hasEdge(v, w) && !_parallel) return;
+    _g[v][w] = true;
+    if (!_directed) _g[w][v] = true;
+    this->_e++;
+}
+
+bool GraphMatrix::hasEdge(int v, int w) {
+    assert(v >= 0 && v <= _v);
+    assert(w >= 0 && w <= _v);
+
+    // O(1)
+    return _g[v][w];
+}
+
+AdjacencyIterator *GraphMatrix::adj(int v) const {
+    return new GraphMatrixAdjacencyIterator(*this, v);
+}
+
+string GraphMatrix::toString() const {
+    stringstream ss;
+    ss << _v << " vertices, " << this->_e << " edges\n";
+    for (int i = 0; i < _v; i++) {
+        AdjacencyIterator *it = adj(i);
+        ss << i << ": ";
+        while (it->hasNext()) {
+            ss << it->next() << " ";
+        }
+        delete it;
+        ss << "\n";
+    }
+
+    return std::move(string(ss.str()));
+}
+
+GraphListAdjacencyIterator::GraphListAdjacencyIterator(const GraphList &G, int v)
+        : g(G), w(0) {
+    this->v = v;
+}
+
+bool GraphListAdjacencyIterator::hasNext() {
+    return this->w < g._g[v].size();
+}
+
+int GraphListAdjacencyIterator::next() {
+    return g._g[this->v][this->w++];
 }
 
 
-bool GraphListIterator::hasNext() {
-    return _i < _v->size();
+GraphMatrixAdjacencyIterator::GraphMatrixAdjacencyIterator(const GraphMatrix &G, int v)
+        : g(G), w(0) {
+    this->v = v;
 }
 
-int GraphListIterator::next() {
-    return (*_v)[_i++];
+bool GraphMatrixAdjacencyIterator::hasNext() {
+    while (w < g._v) {
+        if (g._g[this->v][this->w]) {
+            return true;
+        }
+        w++;
+    }
+    return false;
 }
+
+int GraphMatrixAdjacencyIterator::next() {
+    return this->w++;
+}
+

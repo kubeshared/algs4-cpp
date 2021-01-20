@@ -1,6 +1,8 @@
 add_library(digraph
         digraph.cpp
         digraph.h
+        digraph_symbol.cpp
+        digraph_symbol.h
         directed_dfs.cpp
         directed_dfs.h
         directed_cycle.cpp

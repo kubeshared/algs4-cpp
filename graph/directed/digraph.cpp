@@ -49,7 +49,7 @@ int Digraph::E() const {
     return _e;
 }
 
-AdjacencyIterator Digraph::adj(int v) const{
+GraphListAdjacencyIterator Digraph::adj(int v) const{
     assert(v <= _v && v >= 0);
     return {g[v].cbegin(), g[v].cend()};
 }
@@ -57,7 +57,7 @@ AdjacencyIterator Digraph::adj(int v) const{
 Digraph Digraph::reverse() const{
     Digraph reverse(_v);
     for (int v = 0; v < _v; v++) {
-        AdjacencyIterator adjIt = adj(v);
+        GraphListAdjacencyIterator adjIt = adj(v);
         while (adjIt.hasNext()) {
             int w = adjIt.next();
             reverse.addEdge(w, v);
@@ -70,7 +70,7 @@ string Digraph::toString() const {
     stringstream ss;
     ss << _v << " vertices, " << _e << " edges\n";
     for(int i = 0; i < _v; i++) {
-        AdjacencyIterator it = adj(i);
+        GraphListAdjacencyIterator it = adj(i);
         ss << i << ": ";
         while (it.hasNext()) {
             ss << it.next() << " ";
@@ -90,14 +90,14 @@ void split(const std::string& str, Container& cont)
               std::back_inserter(cont));
 }
 
-AdjacencyIterator::AdjacencyIterator(vector<int>::const_iterator begin, vector<int>::const_iterator end)
+GraphListAdjacencyIterator::GraphListAdjacencyIterator(vector<int>::const_iterator begin, vector<int>::const_iterator end)
 :_beg(begin), _end(end) {
 }
 
-bool AdjacencyIterator::hasNext() const {
+bool GraphListAdjacencyIterator::hasNext() const {
     return _beg != _end;
 }
 
-int AdjacencyIterator::next() {
+int GraphListAdjacencyIterator::next() {
     return *_beg++;
 }

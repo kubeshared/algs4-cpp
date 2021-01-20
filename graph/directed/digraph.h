@@ -18,9 +18,9 @@ using namespace std;
 template <class Container>
 void split(const std::string& str, Container& cont);
 
-class AdjacencyIterator {
+class GraphListAdjacencyIterator {
 public:
-    AdjacencyIterator(vector<int>::const_iterator begin, vector<int>::const_iterator end);
+    GraphListAdjacencyIterator(vector<int>::const_iterator begin, vector<int>::const_iterator end);
     bool hasNext() const;
     int next();
 private:
@@ -34,7 +34,7 @@ public:
     int V() const;
     int E() const;
     void addEdge(int v, int w);
-    AdjacencyIterator adj(int v) const;
+    GraphListAdjacencyIterator adj(int v) const;
     Digraph reverse() const;
     string toString() const;
     bool hasEdge(int v, int w);
