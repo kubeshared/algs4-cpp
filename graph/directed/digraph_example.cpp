@@ -15,7 +15,5 @@ int main(int argc, const char *argv[])
     fstream in(filename);
     Digraph dg(in);
     cout << dg.toString();
-
-    cout << dg.reverse().toString();
     in.close();
 }

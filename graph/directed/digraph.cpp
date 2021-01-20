@@ -11,48 +11,23 @@ Digraph::Digraph(int v) {
 
 // TODO problem
 Digraph::Digraph(fstream& in) {
-//    string line;
-//    if (!getline(in, line)) {
-//        perror("Error get Digraph V");
-//        exit(1);
-//    }
-
     int v, e;
-    in >> v;
-    in >> e;
+    in >> v >> e;
 
-//    int v = stoi(line);
     assert(v >= 0);
-//    if (!getline(in, line)) {
-//        perror("Error get Digraph E");
-//        exit(1);
-//    }
-//    int e = stoi(line);
     assert(e >= 0);
-
-    cout << v << endl;
-    cout << e << endl;
 
     g = vector<vector<int>>(v, vector<int>());
     _v = v;
     for (int i = 0; i < e; i++) {
         int v1, v2;
-        in >> v1;
-        in >> v2;
+        in >> v1 >> v2;
         addEdge(v1, v2);
-//        if (getline(in, line)) {
-//            vector<string> edges;
-//            split(line, edges);
-//            assert(edges.size() == 2);
-//            cout << stoi(edges[0]) << "," << stoi(edges[1]) << endl;
-//            addEdge(stoi(edges[0]), stoi(edges[1]));
-//        }
     }
 }
 
 void Digraph::addEdge(int v, int w) {
-//    if (hasEdge(v, w)) return;
-    g[v].push_back(w);
+    g[v].insert(g[v].begin(), w);
     _e++;
 }
 

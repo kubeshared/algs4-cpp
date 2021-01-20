@@ -18,8 +18,10 @@ int main(int argc, const char *argv[])
     in.close();
 
     Topological top(dg);
-    for (auto v : top.order()) {
-        cout << v << " ";
+    stack<int> topOrder = top.order();
+    while (!topOrder.empty()) {
+        cout << topOrder.top() << " ";
+        topOrder.pop();
     }
     cout << endl;
 }

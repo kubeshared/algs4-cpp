@@ -19,7 +19,7 @@ int main(int argc, const char *argv[])
     in.close();
 
     // compute the strongly connected component
-    SCC scc(dg);
+    KosarajuSCC scc(dg);
 
     // show all connected components
     cout << "strong components: " << scc.count() << endl;

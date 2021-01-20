@@ -18,6 +18,8 @@ add_executable(directed_dfs_example directed_dfs_example.cpp)
 
 add_executable(directed_cycle_example directed_cycle_example.cpp)
 
+add_executable(directed_dfs_order_example directed_dfs_order_example.cpp)
+
 add_executable(directed_topological_example directed_topological_example.cpp)
 
 add_executable(directed_scc_example directed_scc_example.cpp)
@@ -31,3 +33,5 @@ target_link_libraries(directed_cycle_example digraph)
 target_link_libraries(directed_topological_example digraph)
 
 target_link_libraries(directed_scc_example digraph)
+
+target_link_libraries(directed_dfs_order_example digraph)

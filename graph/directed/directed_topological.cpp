@@ -15,6 +15,6 @@ bool Topological::isDAG() const {
     return !reverseOrder.empty();
 }
 
-const deque<int>& Topological::order() const {
+const stack<int>& Topological::order() const {
     return reverseOrder;
 }

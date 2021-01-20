@@ -5,13 +5,17 @@
 #include "directed_dfs_order.h"
 DepthFirstOrder::DepthFirstOrder(const Digraph &G) {
     marked = new bool[G.V()];
+    for (int i = 0; i < G.V(); i++)
+        marked[i] = false;
+
     preQueue = new queue<int>;
     postQueue = new queue<int>;
-    reversePostQueue = new deque<int>;
+    reversePostQueue = new stack<int>;
 
-    for (int s = 0; s < G.V(); s++)
-        if (!marked[s])
-            dfs(G, s);
+    for (int v = 0; v < G.V(); v++)
+        if (!marked[v]) {
+            dfs(G, v);
+        }
 }
 
 DepthFirstOrder::~DepthFirstOrder() {
@@ -21,20 +25,19 @@ DepthFirstOrder::~DepthFirstOrder() {
     delete reversePostQueue;
 }
 
-void DepthFirstOrder::dfs(const Digraph &g, int s) {
-    preQueue->push(s);
-
-    marked[s] = true;
-    AdjacencyIterator adjIt = g.adj(s);
+void DepthFirstOrder::dfs(const Digraph &g, int v) {
+    marked[v] = true;
+    preQueue->push(v);
+    AdjacencyIterator adjIt = g.adj(v);
     while (adjIt.hasNext()){
-        int v = adjIt.next();
-        if (!marked[v]) {
-            dfs(g, v);
+        int w = adjIt.next();
+        if (!marked[w]) {
+            dfs(g, w);
         }
     }
 
-    postQueue->push(s);
-    reversePostQueue->push_front(s);
+    postQueue->push(v);
+    reversePostQueue->push(v);
 }
 
 const queue<int>* DepthFirstOrder::pre() const {
@@ -45,6 +48,6 @@ const queue<int>* DepthFirstOrder::post() const {
     return postQueue;
 }
 
-const deque<int>* DepthFirstOrder::reversePost() const {
+const stack<int>* DepthFirstOrder::reversePost() const {
     return reversePostQueue;
 }

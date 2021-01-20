@@ -6,10 +6,10 @@
 #define ALGS4_DIRECTED_SCC_H
 #include "digraph.h"
 #include "directed_dfs_order.h"
-class SCC {
+class KosarajuSCC {
 public:
-    SCC(const Digraph& G);
-    ~SCC();
+    KosarajuSCC(const Digraph& G);
+    ~KosarajuSCC();
     bool stronglyConnected(int v, int w);
     int count();
     int id(int v);

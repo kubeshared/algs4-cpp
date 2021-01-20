@@ -4,12 +4,16 @@
 
 #include "directed_scc.h"
 
-SCC::SCC(const Digraph &G) {
+KosarajuSCC::KosarajuSCC(const Digraph &G) {
     marked = new bool[G.V()];
     _id = new int[G.V()];
     _count = 0;
     DepthFirstOrder order(G.reverse());
-    for (int v : *order.reversePost()) {
+    // TODO avoid to copy stack
+    stack<int> reverseOrder = *order.reversePost();
+    while (!reverseOrder.empty()) {
+        int v = reverseOrder.top();
+        reverseOrder.pop();
         if (!marked[v]) {
             dfs(G, v);
             _count++;
@@ -17,24 +21,24 @@ SCC::SCC(const Digraph &G) {
     }
 }
 
-SCC::~SCC() {
+KosarajuSCC::~KosarajuSCC() {
     delete []marked;
     delete []_id;
 }
 
-bool SCC::stronglyConnected(int v, int w) {
+bool KosarajuSCC::stronglyConnected(int v, int w) {
     return id(v) == id(w);
 }
 
-int SCC::count() {
+int KosarajuSCC::count() {
     return _count;
 }
 
-int SCC::id(int v) {
+int KosarajuSCC::id(int v) {
     return _id[v];
 }
 
-void SCC::dfs(const Digraph &G, int s) {
+void KosarajuSCC::dfs(const Digraph &G, int s) {
     marked[s] = true;
     _id[s] = _count;
     AdjacencyIterator adjIt = G.adj(s);
