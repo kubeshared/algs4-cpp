@@ -127,15 +127,15 @@ bool GraphList::hasEdge(int v, int w) {
     return false;
 }
 
-AdjacencyIterator *GraphList::adj(int v) const {
-    return new GraphListAdjacencyIterator(*this, v);
+AdjacencyIterator<int> *GraphList::adj(int v) const {
+    return new GraphListAdjacencyIterator<int>(*this, v);
 }
 
 string GraphList::toString() const {
     stringstream ss;
     ss << _v << " vertices, " << _e << " edges\n";
     for (int i = 0; i < _v; i++) {
-        AdjacencyIterator *it = adj(i);
+        AdjacencyIterator<int> *it = adj(i);
         ss << i << ": ";
         while (it->hasNext()) {
             ss << it->next() << " ";
@@ -193,15 +193,15 @@ bool GraphMatrix::hasEdge(int v, int w) {
     return _g[v][w];
 }
 
-AdjacencyIterator *GraphMatrix::adj(int v) const {
-    return new GraphMatrixAdjacencyIterator(*this, v);
+AdjacencyIterator<int> *GraphMatrix::adj(int v) const {
+    return new GraphMatrixAdjacencyIterator<int>(*this, v);
 }
 
 string GraphMatrix::toString() const {
     stringstream ss;
     ss << _v << " vertices, " << this->_e << " edges\n";
     for (int i = 0; i < _v; i++) {
-        AdjacencyIterator *it = adj(i);
+        AdjacencyIterator<int> *it = adj(i);
         ss << i << ": ";
         while (it->hasNext()) {
             ss << it->next() << " ";
@@ -213,26 +213,31 @@ string GraphMatrix::toString() const {
     return std::move(string(ss.str()));
 }
 
-GraphListAdjacencyIterator::GraphListAdjacencyIterator(const GraphList &G, int v)
+template <typename T>
+GraphListAdjacencyIterator<T>::GraphListAdjacencyIterator(const GraphList &G, int v)
         : g(G), w(0) {
     this->v = v;
 }
 
-bool GraphListAdjacencyIterator::hasNext() {
+template <typename T>
+bool GraphListAdjacencyIterator<T>::hasNext() {
     return this->w < g._g[v].size();
 }
 
-int GraphListAdjacencyIterator::next() {
+template <typename T>
+T GraphListAdjacencyIterator<T>::next() {
     return g._g[this->v][this->w++];
 }
 
 
-GraphMatrixAdjacencyIterator::GraphMatrixAdjacencyIterator(const GraphMatrix &G, int v)
+template <typename T>
+GraphMatrixAdjacencyIterator<T>::GraphMatrixAdjacencyIterator(const GraphMatrix &G, int v)
         : g(G), w(0) {
     this->v = v;
 }
 
-bool GraphMatrixAdjacencyIterator::hasNext() {
+template <typename T>
+bool GraphMatrixAdjacencyIterator<T>::hasNext() {
     while (w < g._v) {
         if (g._g[this->v][this->w]) {
             return true;
@@ -242,7 +247,8 @@ bool GraphMatrixAdjacencyIterator::hasNext() {
     return false;
 }
 
-int GraphMatrixAdjacencyIterator::next() {
+template <typename T>
+T GraphMatrixAdjacencyIterator<T>::next() {
     return this->w++;
 }
 

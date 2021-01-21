@@ -66,9 +66,9 @@ private:
 private:
 };
 
-class AdjacencyIterator;
-class GraphListAdjacencyIterator;
-class GraphListMatrixIterator;
+template<typename T> class AdjacencyIterator;
+template<typename T> class GraphListAdjacencyIterator;
+template<typename T> class GraphListMatrixIterator;
 
 class GraphInterface;
 class GraphList;
@@ -87,7 +87,7 @@ public:
 
     virtual bool hasEdge(int v, int w) = 0;
 
-    virtual AdjacencyIterator *adj(int v) const = 0;
+    virtual AdjacencyIterator<int> *adj(int v) const = 0;
 
     virtual string toString() const = 0;
 
@@ -97,19 +97,20 @@ protected:
 };
 
 // API for undirected graph adjacency iterator
+template <typename T>
 class AdjacencyIterator {
 public:
     virtual ~AdjacencyIterator() = default;
 
     virtual bool hasNext() = 0;
 
-    virtual int next() = 0;
+    virtual T next() = 0;
 
 protected:
     int v;
 };
 
-class GraphListAdjacencyIterator : public AdjacencyIterator {
+template<typename T> class GraphListAdjacencyIterator : public AdjacencyIterator<T> {
 public:
     explicit GraphListAdjacencyIterator(const GraphList& G, int v);
 
@@ -117,7 +118,7 @@ public:
 
     bool hasNext()  override;
 
-    int next() override;
+    T next() override;
 
 private:
     int w;
@@ -125,7 +126,7 @@ private:
     const GraphList& g;
 };
 
-class GraphMatrixAdjacencyIterator : public AdjacencyIterator{
+template<typename T> class GraphMatrixAdjacencyIterator : public AdjacencyIterator<T> {
 public:
     explicit GraphMatrixAdjacencyIterator(const GraphMatrix& G, int v);
 
@@ -133,7 +134,7 @@ public:
 
     bool hasNext() override;
 
-    int next() override;
+    T next() override;
 
 private:
     int w;
@@ -141,7 +142,7 @@ private:
 };
 
 class GraphList : public GraphInterface {
-    friend GraphListAdjacencyIterator;
+    friend GraphListAdjacencyIterator<int>;
 public:
     explicit GraphList(int v);
 
@@ -155,7 +156,7 @@ public:
 
     bool hasEdge(int v, int w) override;
 
-    AdjacencyIterator *adj(int v) const override;
+    AdjacencyIterator<int> *adj(int v) const override;
 
     string toString() const override;
 
@@ -166,7 +167,7 @@ private:
 };
 
 class GraphMatrix : public GraphInterface {
-    friend GraphMatrixAdjacencyIterator;
+    friend GraphMatrixAdjacencyIterator<int>;
 public:
     explicit GraphMatrix(int v);
 
@@ -180,7 +181,7 @@ public:
 
     bool hasEdge(int v, int w) override;
 
-    AdjacencyIterator *adj(int v) const override;
+    AdjacencyIterator<int> *adj(int v) const override;
 
     string toString() const override;
 
