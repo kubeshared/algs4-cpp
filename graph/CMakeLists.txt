@@ -1,5 +1,10 @@
 
-add_library(graph graph.cpp
+add_library(graph
+        graph.cpp
+        edge.h
+        edge.cpp
+        edge_weighted_graph.cpp
+        edge_weighted_graph.h
 #        dfs.cpp bfs.cpp
 #        dfs_cc.cpp
 #        bfs_cc.cpp
