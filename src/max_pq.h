@@ -4,11 +4,13 @@
 
 #ifndef ALGS4_MAX_PQ_H
 #define ALGS4_MAX_PQ_H
-
+#include <algorithm>
+#include <vector>
 namespace algs4 {
     template<typename Key>
     class MaxPQ {
-        MaxPQ() = default;
+    public:
+        MaxPQ();
 
         explicit MaxPQ(int max);
 
@@ -27,11 +29,11 @@ namespace algs4 {
         int size();
 
     private:
-        int parent(int k);
+        int parent(int k) const;
 
-        int leftChild(int k);
+        int leftChild(int k) const;
 
-        int rightChild(int k);
+        int rightChild(int k) const;
 
         void resize(int size);
 
@@ -41,7 +43,7 @@ namespace algs4 {
 
         int len;
         int cap;
-        Key *data;
+        std::vector<Key> pq;
     };
 }
 
