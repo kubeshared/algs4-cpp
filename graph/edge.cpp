@@ -9,6 +9,11 @@ Edge::Edge(int v, int w, double weight)
 
 }
 
+Edge::Edge(const Edge &rhs)
+        : _v(rhs._v), _w(rhs._w), _weight(rhs._weight) {
+}
+
+
 double Edge::weight() const {
     return _weight;
 }

@@ -18,7 +18,10 @@ add_library(graph
 
 add_executable(graph_example graph_example.cpp)
 
+add_executable(edge_weighted_graph_example edge_weighted_graph_example.cpp)
+
 add_executable(symbol_graph_example symbol_graph_example.cpp )
 
 target_link_libraries(graph_example graph)
 target_link_libraries(symbol_graph_example graph)
+target_link_libraries(edge_weighted_graph_example graph)

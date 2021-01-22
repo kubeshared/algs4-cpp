@@ -107,6 +107,14 @@ GraphList::GraphList(int v, bool directed, bool parallel) {
     _parallel = parallel;
 }
 
+int GraphList::V() const {
+    return _v;
+}
+
+int GraphList::E() const {
+    return _e;
+}
+
 void GraphList::addEdge(int v, int w) {
     assert(v >= 0 && v <= _v);
     assert(w >= 0 && w <= _v);
@@ -174,6 +182,15 @@ GraphMatrix::GraphMatrix(int v, bool directed, bool parallel) {
     _g = vector<vector<bool>>(_v, vector<bool>(_v, false));
     _directed = directed;
     _parallel = parallel;
+}
+
+
+int GraphMatrix::V() const {
+    return _v;
+}
+
+int GraphMatrix::E() const {
+    return _e;
 }
 
 void GraphMatrix::addEdge(int v, int w) {

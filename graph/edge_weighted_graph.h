@@ -8,24 +8,57 @@
 #include "graph.h"
 #include "edge.h"
 #include <fstream>
+#include <algorithm>
+#include <sstream>
 
 using namespace std;
 
+class EdgeWeightedGraph;
+
+template<typename T>
+class EdgeWeightedAdjacencyIterator;
+
 class EdgeWeightedGraph {
+    friend EdgeWeightedAdjacencyIterator<Edge>;
 public:
-    EdgeWeightedGraph(int v);
-    EdgeWeightedGraph(fstream& in);
+    explicit EdgeWeightedGraph(int v);
+
+    explicit EdgeWeightedGraph(fstream &in);
+
     int V() const;
+
     int E() const;
+
     void addEdge(Edge e);
-    AdjacencyIterator<Edge>* adj(int v);
+
+    AdjacencyIterator<Edge> *adj(int v);
+
     vector<Edge> edges();
+
     string toString();
 
 private:
-    int v;
-    int e;
-    vector<vector<Edge>> g;
+    int _v;
+    int _e;
+    vector<vector<Edge>> _g;
+};
+
+template<typename T>
+class EdgeWeightedAdjacencyIterator
+        : public AdjacencyIterator<T> {
+public:
+    explicit EdgeWeightedAdjacencyIterator(const EdgeWeightedGraph &G, int v);
+
+    ~EdgeWeightedAdjacencyIterator() = default;
+
+    bool hasNext() override;
+
+    T next() override;
+
+private:
+    int _v;
+    int _w;
+    const EdgeWeightedGraph &_g;
 };
 
 

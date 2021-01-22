@@ -79,9 +79,9 @@ class GraphInterface {
 public:
     virtual ~GraphInterface() = default;
 
-    virtual size_t V() const { return _v; };
+    virtual int V() const = 0;
 
-    virtual size_t E() const { return _e; };
+    virtual int E() const = 0;
 
     virtual void addEdge(int v, int w) = 0;
 
@@ -90,10 +90,6 @@ public:
     virtual AdjacencyIterator<int> *adj(int v) const = 0;
 
     virtual string toString() const = 0;
-
-protected:
-    size_t _v;
-    size_t _e;
 };
 
 // API for undirected graph adjacency iterator
@@ -150,6 +146,10 @@ public:
 
     explicit GraphList(int v, bool directed, bool parallel);
 
+    int V() const override;
+
+    int E() const override;
+
     ~GraphList() override = default;
 
     void addEdge(int v, int w) override;
@@ -161,6 +161,8 @@ public:
     string toString() const override;
 
 private:
+    int _v;
+    int _e;
     bool _directed;
     bool _parallel;
     vector<vector<int>> _g;
@@ -177,6 +179,10 @@ public:
 
     ~GraphMatrix() override = default;
 
+    int V() const override;
+
+    int E() const override;
+
     void addEdge(int v, int w) override;
 
     bool hasEdge(int v, int w) override;
@@ -188,8 +194,8 @@ public:
 private:
     bool _directed;
     bool _parallel;
-    size_t _v;
-    size_t _e;
+    int _v;
+    int _e;
     vector<vector<bool>> _g;
 };
 

@@ -8,6 +8,10 @@
 
 class Edge {
 public:
+    Edge() = default;
+
+    Edge(const Edge &rhs);
+
     explicit Edge(int v, int w, double weight);
 
     ~Edge() = default;
