@@ -6,9 +6,9 @@
 
 int main(const int argc, const char **argv)
 {
-    SymbolGraph sg("/Users/xyc/workspace/code/github.com/kubeshared/algs4-cpp/graph/routes.txt", " ");
+    SymbolGraph sg("/Users/xyc/workspace/code/github.com/kubeshared/src-cpp/graph/routes.txt", " ");
     sg.degreesOfSeparation();
 
-//    SymbolGraph sg("/Users/xyc/workspace/code/github.com/kubeshared/algs4-cpp/graph/movies.txt", "/");
+//    SymbolGraph sg("/Users/xyc/workspace/code/github.com/kubeshared/src-cpp/graph/movies.txt", "/");
 //    sg.degreesOfSeparation();
 }

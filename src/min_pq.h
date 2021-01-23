@@ -1,12 +1,12 @@
 //
-// Created by xuyc on 2021/1/22.
+// Created by xuyc on 2021/1/23.
 //
 
-#ifndef ALGS4_MAX_PQ_H
-#define ALGS4_MAX_PQ_H
+#ifndef ALGS4_MIN_PQ_H
+#define ALGS4_MIN_PQ_H
+
 
 #include <fstream>
-#include <iostream>
 #include <algorithm>
 #include <vector>
 #include <string>
@@ -15,26 +15,26 @@ using namespace std;
 
 namespace algs4 {
     template<typename T>
-    class MaxPQ {
+    class MinPQ {
     public:
-        MaxPQ() {
+        MinPQ() {
 
             len = 0;
             pq = vector<T>(11);
         }
 
-        explicit MaxPQ<T>(int max) {
+        explicit MinPQ(int max) {
             len = 0;
             pq = vector<T>(max + 1);
         }
 
 
-        MaxPQ(vector<T> a) {
+        MinPQ(vector<T> a) {
             len = 0;
             pq = move(a);
         }
 
-        ~MaxPQ() = default;
+        ~MinPQ() = default;
 
 
         void insert(T v) {
@@ -45,14 +45,15 @@ namespace algs4 {
             swim(len);
         }
 
-        T max() {
+        T min() {
             return pq[1];
         }
 
-        T delMax() {
+        T delMin() {
             T max = pq[1];
-            pq[1] = pq[len--];
+            swap(pq[1], pq[len--]);
             sink(1);
+            pq.erase(pq.begin() + (len + 1));
             if (len > 0 && (len == (pq.size() - 1) / 4)) {
                 pq.resize(pq.size() / 2);
             }
@@ -81,19 +82,19 @@ namespace algs4 {
         }
 
         void swim(int k) {
-            while (k > 1 && pq[k/2] < pq[k]) {
-                std::swap(pq[k/2], pq[k]);
-                k = k/2;
+            while (k > 1 && pq[k] < pq[parent(k)]) {
+                std::swap(pq[k], pq[parent(k)]);
+                k = parent(k);
             }
         }
 
         void sink(int k) {
             while (leftChild(k) <= len) {
                 int j = leftChild(k);
-                if (j < len && pq[j] < pq[rightChild(k)]) {
+                if (j < len && pq[j] > pq[rightChild(k)]) {
                     j = rightChild(k);
                 }
-                if (pq[k] >= pq[j]) {
+                if (pq[k] <= pq[j]) {
                     break;
                 }
 
@@ -108,4 +109,4 @@ namespace algs4 {
 }
 
 
-#endif //ALGS4_MAX_PQ_H
+#endif //ALGS4_MIN_PQ_H
