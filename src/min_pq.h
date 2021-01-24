@@ -6,10 +6,8 @@
 #define ALGS4_MIN_PQ_H
 
 
-#include <fstream>
 #include <algorithm>
 #include <vector>
-#include <string>
 
 using namespace std;
 

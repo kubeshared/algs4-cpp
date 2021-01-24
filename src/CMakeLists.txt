@@ -15,6 +15,8 @@ add_executable(edge_weighted_graph_example edge_weighted_graph_example.cpp)
 
 add_executable(lazy_prim_mst_example lazy_prim_mst_example.cpp)
 
+add_executable(index_pq_example index_pq_example.cpp)
+
 target_link_libraries(max_pq_example algs4)
 
 target_link_libraries(graph_example algs4)
@@ -22,3 +24,5 @@ target_link_libraries(graph_example algs4)
 target_link_libraries(edge_weighted_graph_example algs4)
 
 target_link_libraries(lazy_prim_mst_example algs4)
+
+target_link_libraries(index_pq_example algs4)

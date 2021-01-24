@@ -5,18 +5,55 @@
 #ifndef ALGS4_INDEX_MIN_PQ_H
 #define ALGS4_INDEX_MIN_PQ_H
 
+#include <vector>
+#include <cassert>
+#include <algorithm>
+
+using namespace std;
+
 namespace algs4 {
     template<typename T>
     class IndexMinPQ {
     private:
         void swim(int k) {
-
+            while (k > 1 && greater(k / 2, k)) {
+                exch(k, k / 2);
+                k = k / 2;
+            }
         }
 
         void sink(int k) {
+            int j;
+            while (k * 2 <= n) {
+                j = k * 2;
+                if (j < n && greater(j, j + 1)) {
+                    j += 1;
+                }
 
+                if (!(greater(k, j))) {
+                    break;
+                }
+                exch(k, j);
+                k = j;
+            }
         }
 
+        void exch(int i, int j) {
+            swap(indexes[i], indexes[j]);
+            swap(reverses[indexes[i]], reverses[indexes[j]]);
+        }
+
+        bool greater(int i, int j) {
+            return data[indexes[i]] > data[indexes[j]];
+        }
+
+        int n;
+
+        vector<T> data;
+
+        int *indexes;
+
+        int *reverses;
     public:
         /**
          * Initializes an empty indexed priority queue with indices between 0
@@ -24,8 +61,19 @@ namespace algs4 {
          * @param maxN keys on this priority queue are index from 0
          *        maxN - 1
          */
-        explicit IndexMinPQ(int maxN) {
+        explicit IndexMinPQ(int maxN) : n(0) {
+            indexes = new int[maxN + 1];
+            reverses = new int[maxN + 1];
+            data = vector<T>(maxN + 1);
+            for (int i = 0; i < maxN + 1; i++) {
+                indexes[i] = 0;
+                reverses[i] = indexes[i];
+            }
+        }
 
+        ~IndexMinPQ() {
+            delete[]indexes;
+            delete[]reverses;
         }
 
         /**
@@ -34,7 +82,7 @@ namespace algs4 {
          *         false otherwise
          */
         bool isEmpty() const {
-
+            return n == 0;
         }
 
         /**
@@ -44,7 +92,7 @@ namespace algs4 {
          *         false otherwise
          */
         bool contains(int i) const {
-
+            return indexes[i] != 0;
         }
 
         /**
@@ -52,7 +100,7 @@ namespace algs4 {
          * @return the number of keys on this priority queue
          */
         int size() const {
-
+            return n;
         }
 
         /**
@@ -61,7 +109,13 @@ namespace algs4 {
          * @param key the key to associate with index i
          */
         void insert(int i, T key) {
-
+            // the i must is between 1 and data.size
+            assert(i >= 0 && i < data.size());
+            n++;
+            data[++i] = key;
+            indexes[n] = i;
+            reverses[i] = n;
+            swim(n);
         }
 
         /**
@@ -69,7 +123,7 @@ namespace algs4 {
          * @return an index associated with a minimum key
          */
         int minIndex() const {
-
+            return indexes[1];
         }
 
         /**
@@ -77,7 +131,7 @@ namespace algs4 {
          * @return a minimum key
          */
         T minKey() const {
-
+            return data[indexes[1]];
         }
 
         /**
@@ -85,7 +139,10 @@ namespace algs4 {
          * @return an index associated with a minimum key
          */
         int delMin() {
-
+            int index = indexes[1];
+            swap(indexes[1], indexes[n--]);
+            sink(1);
+            return index;
         }
 
         /**
@@ -94,7 +151,8 @@ namespace algs4 {
          * @return
          */
         T keyOf(int i) const {
-
+            assert(i > 0 && i < data.size());
+            return data[i];
         }
 
         /**
@@ -103,7 +161,9 @@ namespace algs4 {
          * @param key key change the key associated with index i to this key
          */
         void changeKey(int i, T key) {
-
+            data[i] = key;
+            swim(reverses[i]);
+            sink(reverses[i]);
         }
 
         /**
@@ -112,7 +172,7 @@ namespace algs4 {
          * @param key key change the key associated with index i to this key
          */
         void change(int i, T key) {
-
+            changeKey(i, key);
         }
 
         /**
@@ -137,9 +197,10 @@ namespace algs4 {
          * Remove the key associated with index i.
          * @param i the index of the key to remove
          */
-        void delete (int i) {
+        void deleteKey(int i) {
 
         }
+
     };
 };
 
