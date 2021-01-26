@@ -10,7 +10,7 @@ class Edge {
 public:
     Edge() = default;
 
-    Edge(const Edge &rhs);
+    Edge(const Edge &rhs) = default;
 
     explicit Edge(int v, int w, double weight);
 
@@ -21,6 +21,8 @@ public:
     int either() const;
 
     int other(int v) const;
+
+    bool empty() const;
 
     bool operator==(const Edge &rhs) const;
 

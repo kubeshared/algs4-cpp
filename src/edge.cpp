@@ -9,9 +9,9 @@ Edge::Edge(int v, int w, double weight)
 
 }
 
-Edge::Edge(const Edge &rhs)
-        : _v(rhs._v), _w(rhs._w), _weight(rhs._weight) {
-}
+//Edge::Edge(const Edge &rhs)
+//        : _v(rhs._v), _w(rhs._w), _weight(rhs._weight) {
+//}
 
 
 double Edge::weight() const {
@@ -26,6 +26,10 @@ int Edge::other(int v) const {
     if (v == _v) return _w;
     if (v == _w) return _v;
     return v;
+}
+
+bool Edge::empty() const {
+    return _v == -1 && _w == -1;
 }
 
 bool Edge::operator!=(const Edge &rhs) const {

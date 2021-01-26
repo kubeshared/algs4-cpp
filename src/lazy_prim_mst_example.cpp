@@ -3,7 +3,7 @@
 //
 
 #include "lazy_prim_mst.h"
-
+#include "prim_mst.h"
 int main(int argc, const char *argv[]) {
     if (argc != 2) {
         perror("Error no invalid input");
@@ -14,13 +14,21 @@ int main(int argc, const char *argv[]) {
     EdgeWeightedGraph ewg(in);
     in.close();
 
+    cout << argv[0] << " " << argv[1] << endl;
+
     algs4::LazyPrimMST mst(ewg);
     queue<Edge> edges = mst.edges();
-    cout << argv[0] << " " << argv[1] << endl;
     while (!edges.empty()) {
         Edge e = edges.front();
         cout << e.either() << "-" << e.other(e.either()) << " " << e.weight() << endl;
         edges.pop();
     }
     cout << mst.weight() << endl;
+
+    algs4::PrimMST primMst(ewg);
+    vector<Edge> edges2 = primMst.edges();
+    for (const Edge &e :edges2) {
+        cout << e.either() << "-" << e.other(e.either()) << " " << e.weight() << endl;
+    }
+    cout << primMst.weight() << endl;
 }

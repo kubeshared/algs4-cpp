@@ -5,7 +5,8 @@ add_library(algs4
         graph.cpp
         edge.cpp
         edge_weighted_graph.cpp
-        lazy_prim_mst.cpp)
+        lazy_prim_mst.cpp
+        prim_mst.cpp)
 
 add_executable(max_pq_example pq_example.cpp)
 

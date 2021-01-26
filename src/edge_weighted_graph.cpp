@@ -79,5 +79,6 @@ bool EdgeWeightedAdjacencyIterator<T>::hasNext() {
 
 template<typename T>
 T EdgeWeightedAdjacencyIterator<T>::next() {
+    assert(_w < _g._g[_v].size());
     return _g._g[_v][_w++];
 }

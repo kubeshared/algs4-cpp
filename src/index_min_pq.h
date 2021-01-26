@@ -30,7 +30,7 @@ namespace algs4 {
                     j += 1;
                 }
 
-                if (!(greater(k, j))) {
+                if (!greater(k, j)) {
                     break;
                 }
                 exch(k, j);
@@ -40,7 +40,9 @@ namespace algs4 {
 
         void exch(int i, int j) {
             swap(indexes[i], indexes[j]);
-            swap(reverses[indexes[i]], reverses[indexes[j]]);
+            reverses[indexes[i]] = i;
+            reverses[indexes[j]] = j;
+//            swap(reverses[indexes[i]], reverses[indexes[j]]);
         }
 
         bool greater(int i, int j) {
@@ -65,9 +67,9 @@ namespace algs4 {
             indexes = new int[maxN + 1];
             reverses = new int[maxN + 1];
             data = vector<T>(maxN + 1);
-            for (int i = 0; i < maxN + 1; i++) {
-                indexes[i] = 0;
-                reverses[i] = indexes[i];
+            for (int i = 0; i <= maxN; i++) {
+                indexes[i] = -1;
+                reverses[i] = -1;
             }
         }
 
@@ -92,7 +94,7 @@ namespace algs4 {
          *         false otherwise
          */
         bool contains(int i) const {
-            return indexes[i] != 0;
+            return reverses[i] != -1;
         }
 
         /**
@@ -110,12 +112,12 @@ namespace algs4 {
          */
         void insert(int i, T key) {
             // the i must is between 1 and data.size
-            assert(i >= 0 && i < data.size());
+            assert(i >= 0 && i < data.size() - 1);
             n++;
-            data[++i] = key;
-            indexes[n] = i;
+            i++;
             reverses[i] = n;
-            swim(n);
+            indexes[n] = i;
+            data[i] = key;
         }
 
         /**
@@ -140,9 +142,11 @@ namespace algs4 {
          */
         int delMin() {
             int index = indexes[1];
-            swap(indexes[1], indexes[n--]);
+            exch(1, n--);
             sink(1);
-            return index;
+            reverses[index] = -1;
+            indexes[n + 1] = -1;
+            return index - 1;
         }
 
         /**
@@ -161,7 +165,9 @@ namespace algs4 {
          * @param key key change the key associated with index i to this key
          */
         void changeKey(int i, T key) {
-            data[i] = key;
+            assert(i >= 0 && i < data.size());
+            data[++i] = key;
+            if (!contains(i)) return;
             swim(reverses[i]);
             sink(reverses[i]);
         }
@@ -181,7 +187,10 @@ namespace algs4 {
          * @param key key decrease the key associated with index i to this key
          */
         void decreaseKey(int i, T key) {
-
+            assert(i >= 0 && i < data.size());
+            data[++i] = key;
+            // reverses[i] = indexes[i] = data[i]
+            swim(reverses[i]);
         }
 
         /**
@@ -190,7 +199,9 @@ namespace algs4 {
          * @param key
          */
         void increaseKey(int i, T key) {
-
+            assert(i >= 0 && i < data.size());
+            data[++i] = key;
+            sink(reverses[i]);
         }
 
         /**
@@ -198,9 +209,13 @@ namespace algs4 {
          * @param i the index of the key to remove
          */
         void deleteKey(int i) {
-
+            assert(i >= 0 && i < data.size());
+            int index = reverses[++i];
+            exch(index, n--);
+            swim(index);
+            sink(index);
+            reverses[i] = -1;
         }
-
     };
 };
 
