@@ -118,6 +118,7 @@ namespace algs4 {
             reverses[i] = n;
             indexes[n] = i;
             data[i] = key;
+            swim(n);
         }
 
         /**
@@ -155,8 +156,8 @@ namespace algs4 {
          * @return
          */
         T keyOf(int i) const {
-            assert(i > 0 && i < data.size());
-            return data[i];
+            assert(i >= 0 && i < data.size());
+            return data[++i];
         }
 
         /**
