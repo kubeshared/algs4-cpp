@@ -11,18 +11,21 @@ PrimMST::PrimMST(const EdgeWeightedGraph &G)
         : _pq(G.V()) {
     _marked = new bool[G.V()];
     _distTo = new double[G.V()];
+    _weight = 0.0;
     for (int i = 0; i < G.V(); i++) {
         _marked[i] = false;
         _distTo[i] = numeric_limits<int>::max();
     }
     _edgeTo = vector<Edge>(G.V(), Edge(-1, -1, 0.0));
     // run from each vertex to find
-    for (int v = 0; v < G.V(); v++) {
-        // minimum spanning forest
-        if (!_marked[v]) {
-            prim(G, v);
-        }
-    }
+//    for (int v = 0; v < G.V(); v++) {
+//        // minimum spanning forest
+//        if (!_marked[v]) {
+//            prim(G, v);
+//        }
+//    }
+
+    prim(G, 0);
 }
 
 PrimMST::~PrimMST() {
@@ -51,7 +54,7 @@ void PrimMST::scan(const EdgeWeightedGraph &G, int v) {
             _distTo[w] = e.weight();
             _edgeTo[w] = e;
             if (_pq.contains(w)) {
-                _pq.decreaseKey(w, _distTo[w]);
+                _pq.change(w, _distTo[w]);
             } else {
                 _pq.insert(w, _distTo[w]);
             }
@@ -64,7 +67,7 @@ vector<Edge> PrimMST::edges() const {
     vector<Edge> mst;
     for ( Edge e : _edgeTo) {
         if (!e.empty()) {
-            mst.push_back(e);
+            mst.insert(mst.begin(), e);
         }
     }
 

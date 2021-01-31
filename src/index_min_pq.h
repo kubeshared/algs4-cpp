@@ -42,7 +42,6 @@ namespace algs4 {
             swap(indexes[i], indexes[j]);
             reverses[indexes[i]] = i;
             reverses[indexes[j]] = j;
-//            swap(reverses[indexes[i]], reverses[indexes[j]]);
         }
 
         bool greater(int i, int j) {
@@ -94,7 +93,7 @@ namespace algs4 {
          *         false otherwise
          */
         bool contains(int i) const {
-            return reverses[i] != -1;
+            return reverses[i + 1] != -1;
         }
 
         /**
@@ -113,11 +112,11 @@ namespace algs4 {
         void insert(int i, T key) {
             // the i must is between 1 and data.size
             assert(i >= 0 && i < data.size() - 1);
-            n++;
             i++;
-            reverses[i] = n;
-            indexes[n] = i;
             data[i] = key;
+            indexes[n + 1] = i;
+            reverses[i] = n + 1;
+            n++;
             swim(n);
         }
 
@@ -142,12 +141,14 @@ namespace algs4 {
          * @return an index associated with a minimum key
          */
         int delMin() {
-            int index = indexes[1];
-            exch(1, n--);
+            int index = indexes[1] - 1;
+//            swap(indexes[1], indexes[n]);
+//            reverses[indexes[1]] = 1;
+//            reverses[indexes[n]] = -1;
+            exch(1, n);
+            n--;
             sink(1);
-            reverses[index] = -1;
-            indexes[n + 1] = -1;
-            return index - 1;
+            return index;
         }
 
         /**
@@ -167,8 +168,9 @@ namespace algs4 {
          */
         void changeKey(int i, T key) {
             assert(i >= 0 && i < data.size());
-            data[++i] = key;
-            if (!contains(i)) return;
+            i++;
+            data[i] = key;
+//            if (!contains(i)) return;
             swim(reverses[i]);
             sink(reverses[i]);
         }
@@ -218,6 +220,6 @@ namespace algs4 {
             reverses[i] = -1;
         }
     };
-};
+}
 
 #endif //ALGS4_INDEX_MIN_PQ_H

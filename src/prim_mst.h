@@ -30,6 +30,7 @@ namespace algs4 {
 
         bool *_marked;
         double *_distTo;
+        double _weight;
         vector<Edge> _edgeTo;
         IndexMinPQ<double> _pq;
     public:

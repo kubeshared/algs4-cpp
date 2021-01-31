@@ -28,7 +28,7 @@ int main(int argc, char *argv[]) {
         minPQ.insert(i, contents[i]);
     }
 
-    minPQ.change(0, "Dijkstra   12/18/1995   837.42");
+//    minPQ.change(0, "Dijkstra   12/18/1995   837.42");
     while (!minPQ.isEmpty()) {
        cout <<  minPQ.keyOf(minPQ.delMin()) << endl;
     }
