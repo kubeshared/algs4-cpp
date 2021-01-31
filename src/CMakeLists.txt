@@ -1,4 +1,7 @@
 add_library(algs4
+        uf.h
+        uf_impl.h
+        uf_impl.cpp
         min_pq.h
         max_pq.h
         index_min_pq.h
