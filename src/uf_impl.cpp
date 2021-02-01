@@ -9,7 +9,7 @@ using namespace algs4;
 QuickFindUF::QuickFindUF(int n) {
     _id = new int[n];
     _count = n;
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < _count; i++) {
         _id[i] = i;
     }
 }
@@ -23,20 +23,19 @@ int QuickFindUF::count() {
 }
 
 int QuickFindUF::find(int p) {
-    assert(p >= 0 && p < _count);
     return _id[p];
 }
 
 bool QuickFindUF::connected(int p, int q) {
-    return find(p) == find(q);
+    return _id[p] == _id[q];
 }
 
 void QuickFindUF::un(int p, int q) {
     int pid = find(p);
     int qid = find(q);
     for (int i = 0; i < _count; i++) {
-        if (_id[i] == qid) {
-            _id[i] = pid;
+        if (_id[i] == pid) {
+            _id[i] = qid;
         }
     }
     _count--;
@@ -59,7 +58,7 @@ int QuickUnionUF::count() {
 }
 
 int QuickUnionUF::find(int p) {
-    assert(p >= 0 && p < _count);
+//    assert(p >= 0 && p < _count);
     while (p != _id[p]) {
         p = _id[p];
     }
@@ -71,12 +70,12 @@ bool QuickUnionUF::connected(int p, int q) {
 }
 
 void QuickUnionUF::un(int p, int q) {
-    int pp = find(p);
-    int qp = find(q);
-    if (pp == qp) {
+    int pRoot = find(p);
+    int qRoot = find(q);
+    if (pRoot == qRoot) {
         return;
     }
-    _id[pp] = qp;
+    _id[pRoot] = qRoot;
     _count--;
 }
 
@@ -100,7 +99,7 @@ int QuickWeightedUnionUF::count() {
 }
 
 int QuickWeightedUnionUF::find(int p) {
-    assert(p >= 0 && p < _count);
+//    assert(p >= 0 && p < _count);
     while (p != _id[p]) {
         p = _id[p];
     }

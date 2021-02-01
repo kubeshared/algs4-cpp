@@ -8,6 +8,8 @@
 namespace algs4 {
     class UF {
     public:
+        virtual ~UF() = default;
+
         /**
          * Returns the number of sets.
          * @return the number of sets between 0 and n
