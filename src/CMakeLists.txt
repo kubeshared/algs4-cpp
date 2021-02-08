@@ -9,7 +9,9 @@ add_library(algs4
         edge.cpp
         edge_weighted_graph.cpp
         lazy_prim_mst.cpp
-        prim_mst.cpp)
+        prim_mst.cpp
+        kruskal_mst.h
+        kruskal_mst.cpp)
 
 add_executable(max_pq_example pq_example.cpp)
 

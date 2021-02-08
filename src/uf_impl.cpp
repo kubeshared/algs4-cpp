@@ -43,8 +43,9 @@ void QuickFindUF::un(int p, int q) {
 
 QuickUnionUF::QuickUnionUF(int n) {
     _id = new int[n];
+    _n = n;
     _count = n;
-    for (int i = 0; i < _count; i++) {
+    for (int i = 0; i < _n; i++) {
         _id[i] = i;
     }
 }
@@ -58,8 +59,11 @@ int QuickUnionUF::count() {
 }
 
 int QuickUnionUF::find(int p) {
-//    assert(p >= 0 && p < _count);
+    assert(p >= 0 && p < _count);
+    // we start from point p and get the parent of point p
+    // through id[p] until we find the root node.
     while (p != _id[p]) {
+        // get the parent of point p
         p = _id[p];
     }
     return p;
@@ -70,11 +74,16 @@ bool QuickUnionUF::connected(int p, int q) {
 }
 
 void QuickUnionUF::un(int p, int q) {
+    // get the root node of p
     int pRoot = find(p);
+    // get the root node of q
     int qRoot = find(q);
+    // do nothing, because p and q in same connected component.
     if (pRoot == qRoot) {
         return;
     }
+    // union all points in the set of connected components pRoot to qRoot, now
+    // the p and q in same connected component.
     _id[pRoot] = qRoot;
     _count--;
 }
@@ -82,8 +91,9 @@ void QuickUnionUF::un(int p, int q) {
 QuickWeightedUnionUF::QuickWeightedUnionUF(int n) {
     _id = new int[n];
     _sz = new int[n];
+    _n = n;
     _count = n;
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < _n; i++) {
         _id[i] = i;
         _sz[i] = 0;
     }
@@ -99,7 +109,7 @@ int QuickWeightedUnionUF::count() {
 }
 
 int QuickWeightedUnionUF::find(int p) {
-//    assert(p >= 0 && p < _count);
+    assert(p >= 0 && p < _count);
     while (p != _id[p]) {
         p = _id[p];
     }
@@ -111,17 +121,21 @@ bool QuickWeightedUnionUF::connected(int p, int q) {
 }
 
 void QuickWeightedUnionUF::un(int p, int q) {
-    int pp = find(p);
-    int qp = find(q);
-    if (pp == qp) {
+    // get the root of p
+    int pRoot = find(p);
+    // get the root of q
+    int qRoot = find(q);
+    if (pRoot == qRoot) {
         return;
     }
-    if (_sz[pp] > _sz[qp]) {
-        _id[qp] = pp;
-        _sz[pp] += _sz[qp];
+    // we always union small tree into large tree.
+    if (_sz[pRoot] > _sz[qRoot]) {
+        _id[qRoot] = pRoot;
+        // update the tree height.
+        _sz[pRoot] += _sz[qRoot];
     } else {
-        _sz[pp] = qp;
-        _sz[qp] += _sz[pp];
+        _sz[pRoot] = qRoot;
+        _sz[qRoot] += _sz[pRoot];
     }
     _count--;
 }

@@ -29,8 +29,12 @@ namespace algs4 {
 
     class QuickUnionUF : public UF {
     private:
-        int *_id;
+        // the number of connected components
         int _count;
+        // the number of points
+        int _n;
+        // these is point store here.
+        int *_id;
     public:
         QuickUnionUF(int n);
 
@@ -47,9 +51,14 @@ namespace algs4 {
 
     class QuickWeightedUnionUF : public UF {
     private:
-        int *_id;
-        int *_sz;
+        // the number of connected components
         int _count;
+        // the number of points
+        int _n;
+        // these is point store here.
+        int *_id;
+        // record the height of point
+        int *_sz;
     public:
         QuickWeightedUnionUF(int n);
 
